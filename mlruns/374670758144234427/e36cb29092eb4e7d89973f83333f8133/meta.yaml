@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/%D0%98%D0%B2%D0%B0%D0%BD/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/TIOI/mlruns/374670758144234427/e36cb29092eb4e7d89973f83333f8133/artifacts
+end_time: 1753207197563
+entry_point_name: ''
+experiment_id: '374670758144234427'
+lifecycle_stage: active
+run_id: e36cb29092eb4e7d89973f83333f8133
+run_name: dashing-penguin-616
+run_uuid: e36cb29092eb4e7d89973f83333f8133
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753207195886
+status: 3
+tags: []
+user_id: Иван
