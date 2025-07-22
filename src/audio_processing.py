@@ -43,14 +43,15 @@ def load_audio_files(data_dir, sample_rate=8000, n_mfcc=13):
 
 def preprocess_data(data_dir, test_split=0.2):
     """
-    Загружает и разделяет данные на обучающую и тестовую выборки.
+    Загружает и разделяет данные на обучающую и тестовую выборки или возвращает весь датасет.
 
     Аргументы:
         data_dir (str): Путь к датасету.
-        test_split (float): Доля данных для тестирования.
+        test_split (float): Доля данных для тестирования (0 для использования всего датасета).
 
     Возвращает:
-        X_train, X_test, y_train, y_test: Разделенные и предобработанные данные.
+        Если test_split > 0: X_train, X_test, y_train, y_test
+        Если test_split = 0: X, y
     """
     X, y = load_audio_files(data_dir)
 
@@ -59,15 +60,22 @@ def preprocess_data(data_dir, test_split=0.2):
     X = X[indices]
     y = y[indices]
 
-    # Разделение на обучающую и тестовую выборки
-    split_idx = int(len(X) * (1 - test_split))
-    X_train, X_test = X[:split_idx], X[split_idx:]
-    y_train, y_test = y[:split_idx], y[split_idx:]
+    if test_split > 0:
+        # Разделение на обучающую и тестовую выборки
+        split_idx = int(len(X) * (1 - test_split))
+        X_train, X_test = X[:split_idx], X[split_idx:]
+        y_train, y_test = y[:split_idx], y[split_idx:]
 
-    # Нормализация признаков
-    mean = np.mean(X_train, axis=0)
-    std = np.std(X_train, axis=0) + 1e-6  # Избежание деления на ноль
-    X_train = (X_train - mean) / std
-    X_test = (X_test - mean) / std
+        # Нормализация признаков
+        mean = np.mean(X_train, axis=0)
+        std = np.std(X_train, axis=0) + 1e-6  # Избежание деления на ноль
+        X_train = (X_train - mean) / std
+        X_test = (X_test - mean) / std
 
-    return X_train, X_test, y_train, y_test
+        return X_train, X_test, y_train, y_test
+    else:
+        # Нормализация всего датасета
+        mean = np.mean(X, axis=0)
+        std = np.std(X, axis=0) + 1e-6
+        X = (X - mean) / std
+        return X, y
